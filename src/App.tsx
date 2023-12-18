@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
-import './App.css'
 import 'bootstrap/dist/css/bootstrap.css';
+import './App.css'
 import { DisplayState } from './extend';
 import TimeSet from './TimeSet';
 import Display from './Display';
@@ -99,13 +99,15 @@ function App() {
 
   return (
     <>
-      <div className='container text-center'>
-        <h1>25 + 5 Clock</h1>
+      {/* <div className='container-fluid text-center' style={{backgroundColor:"#1E555C", color:"white"}}> */}
+      <div className='container-fluid text-center' style={{backgroundColor:"#1E555C", color:"white", paddingTop: "280px"}}>
+
+        <h1 style={{fontSize: "90px"}}>25 + 5 Clock</h1>
 
         {/* maybe this can make another file */}
         <div className="row">
           <div className='col-md length-control'>
-            <h3 id='break-label'>Break Length</h3>
+            <h3 id='break-label' style={{fontSize: "70px"}} >Break Length</h3>
             <TimeSet 
               time={breakTime}
               setTime={changeBreakTime}
@@ -117,7 +119,7 @@ function App() {
           </div>
           
           <div className='col-md session-control'>
-            <h3 id='session-label'>Session Length</h3>
+            <h3 id='session-label' style={{fontSize: "70px"}}>Session Length</h3>
             <TimeSet 
               time={sessionTime}
               setTime={changeSessionTime}

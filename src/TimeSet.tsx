@@ -17,16 +17,16 @@ const TimeSet: React.FC<TimeSetProps> = ({
 }) => {
   return (
     <div>
-        <div className="row justify-content-center">
+        <div className="justify-content-center">
             {/* the setTime is refer to setBreakTime & set from app.tsx */}
             {/* id="break-decrement" |  id="session-decrement"*/}
-            <button id={`${type}-decrement`} className='col-md-1 bg-primary' style={{color:"white"}} onClick={()=> (time > min ? setTime(time - interval): null)}><FaArrowDown /></button>
+            <button id={`${type}-decrement`} className='col-md-1 text-white border-0 ' style={{backgroundColor:"#1E555C", fontSize: "35px"}} onClick={()=> (time > min ? setTime(time - interval): null)}><FaArrowDown /></button>
 
             {/* id="break-length" | id="session-length" */}
             <span id={`${type}-length`} className='col-md-1'>{time / interval}</span>   {/* time in second / 60 = minutes */}
 
             {/* id="break-increment" | id="session-increment" */}
-            <button id={`${type}-increment`} className='col-md-1 bg-primary' style={{color:"white"}}  onClick={()=> (time < max ? setTime(time + interval): null)}><FaArrowUp /></button>
+            <button id={`${type}-increment`} className='col-md-1 text-white border-0 ' style={{backgroundColor:"#1E555C", fontSize: "35px"}}  onClick={()=> (time < max ? setTime(time + interval): null)}><FaArrowUp /></button>
         </div>
     </div>
   );

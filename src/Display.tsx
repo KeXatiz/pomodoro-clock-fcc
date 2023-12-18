@@ -18,9 +18,9 @@ const Display: React.FC<DisplayProps> = ({
       <h3 id="timer-label">{displayState.timeType}</h3>
       <span id="time-left" style={{color: `${displayState.timerRunning ? "red" : "black"}`}}>{formatTime(displayState.time)}</span>
 
-      <div className="col bg-primary">
-        <button id="start_stop" onClick={() => startStop(displayState)}> {displayState.timerRunning ? <FaPause /> : <FaPlay /> } </button>
-        <button id="reset" onClick={reset}><FaUndo /></button>
+      <div className="col">
+        <button id="start_stop" className='bg-primary m-2 p-1' style={{color:"white"}} onClick={() => startStop(displayState)}> {displayState.timerRunning ? <FaPause /> : <FaPlay /> } </button>
+        <button id="reset" className='bg-primary m-2 p-1' style={{color:"white"}} onClick={reset}><FaUndo /></button>
       </div>
     </div>
   );

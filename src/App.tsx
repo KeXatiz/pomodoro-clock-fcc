@@ -24,7 +24,6 @@ function App() {
   });
 
   // https://www.w3schools.com/react/react_useeffect.asp#:~:text=The%20useEffect%20Hook%20allows%20you,useEffect%20accepts%20two%20arguments.
-  //LEARN USEEFFECTS
   useEffect(() => {
     let timerID : number;
     if (!displayState.timerRunning) return;
@@ -44,7 +43,7 @@ function App() {
       audio.play();
       audio.play().catch((err) => console.log(err));
       setDisplayState((prev) => ({
-        ...prev,
+        ...prev,  //take all the preveious value (time, timeType, timerRunning) into a new object
         timeType: prev.timeType == "Session" ? "Break" : "Session",
         time: prev.timeType == "Session" ? breakTime : sessionTime,
       }));
@@ -68,11 +67,10 @@ function App() {
   };
 
 
-  //LEARN    smtg to do with hook
   const startStop = () => {
     console.log("clicked startStop");
     setDisplayState((prev) => ({
-      ...prev,  //take all the preveious value
+      ...prev,  //take all the preveious value (time, timeType, timerRunning) into a new object
       timerRunning: !prev.timerRunning,
     }));
   };
@@ -82,7 +80,6 @@ function App() {
     setBreakTime(time);
   };
   
-  // LEARN
   const decrementDisplay = () => {
     setDisplayState((prev) => ({
       ...prev, //take the previous value

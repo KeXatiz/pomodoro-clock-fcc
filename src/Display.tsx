@@ -1,7 +1,7 @@
 //rafce
 
 import { FaPause, FaUndo, FaPlay } from "react-icons/fa";
-import { DisplayState, formatTime } from "./extend"
+import { DisplayState, formatTime } from "./extend";
 
 interface DisplayProps{
     displayState: DisplayState;                         // import type
@@ -11,19 +11,19 @@ interface DisplayProps{
 
 const Display: React.FC<DisplayProps> = ({
     //destructure props
-    displayState, reset, startStop
+    displayState, reset, startStop,
 }) => {
   return (
     <div className="row">
-      <h4 id="timer-label">{displayState.timeType}</h4>
-      <span id="time-left" style={{color: `${displayState.timerRunning ? "red" : "white"}`}}>{formatTime(displayState.time)}</span>
+      <h3 id="timer-label">{displayState.timeType}</h3>
+      <span id="time-left" style={{color: `${displayState.timerRunning ? "red" : "black"}`}}>{formatTime(displayState.time)}</span>
 
       <div className="col bg-primary">
         <button id="start_stop" onClick={() => startStop(displayState)}> {displayState.timerRunning ? <FaPause /> : <FaPlay /> } </button>
-        <button id="reset" onClick={() => {reset}}><FaUndo /></button>
+        <button id="reset" onClick={reset}><FaUndo /></button>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default Display

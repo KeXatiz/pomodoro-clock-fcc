@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.css';
 import { DisplayState } from './extend';
@@ -23,16 +23,82 @@ function App() {
     timerRunning: false,
   });
 
+  // https://www.w3schools.com/react/react_useeffect.asp#:~:text=The%20useEffect%20Hook%20allows%20you,useEffect%20accepts%20two%20arguments.
+  //LEARN USEEFFECTS
+  useEffect(() => {
+    let timerID : number;
+    if (!displayState.timerRunning) return;
+
+    if (displayState.timerRunning) {
+      timerID = window.setInterval(decrementDisplay, 1000);
+    }
+    //clean up
+    return () => {
+      window.clearInterval(timerID);
+    };
+  }, [displayState.timerRunning]); //it takes arrow fx and second argument is dependency array, if it's blank then it will just run once when the component mounts
+
+  useEffect(() => {
+    if(displayState.time === -1){
+      const audio = document.getElementById("beep") as HTMLAudioElement;
+      audio.play();
+      audio.play().catch((err) => console.log(err));
+      setDisplayState((prev) => ({
+        ...prev,
+        timeType: prev.timeType == "Session" ? "Break" : "Session",
+        time: prev.timeType == "Session" ? breakTime : sessionTime,
+      }));
+      
+    }
+  }, [displayState, breakTime, sessionTime]);  //when displaState, breakTime or sessionTime changes then it will run useEffect
 
   const reset = () => {
+    console.log("clicked reset");
     setBreakTime(defaultBreakTime);
     setSessionTime(defaultSessionTime);
-  }
+    setDisplayState({
+      time: defaultSessionTime,
+      timeType: "Session",
+      timerRunning: false,
+    });
 
+    const audio = document.getElementById("beep") as HTMLAudioElement;
+    audio.pause();
+    audio.currentTime = 0;
+  };
+
+
+  //LEARN    smtg to do with hook
   const startStop = () => {
-    console.log("startStop");
-  }
+    console.log("clicked startStop");
+    setDisplayState((prev) => ({
+      ...prev,  //take all the preveious value
+      timerRunning: !prev.timerRunning,
+    }));
+  };
 
+  const changeBreakTime = (time: number) => {
+    if (displayState.timerRunning) return; //if time is ticking then true then return nothing
+    setBreakTime(time);
+  };
+  
+  // LEARN
+  const decrementDisplay = () => {
+    setDisplayState((prev) => ({
+      ...prev, //take the previous value
+      time: prev.time - 1,
+    }));
+  };
+
+  const changeSessionTime = (time: number) => {
+    if(displayState.timerRunning) return;
+    setSessionTime(time);
+    setDisplayState({
+      time: time,
+      timeType: "Session",
+      timerRunning: false,
+    });
+  };
 
   return (
     <>
@@ -45,7 +111,7 @@ function App() {
             <h3 id='break-label'>Break Length</h3>
             <TimeSet 
               time={breakTime}
-              setTime={setBreakTime}
+              setTime={changeBreakTime}
               min={min}
               max={max}
               interval={interval}
@@ -57,7 +123,7 @@ function App() {
             <h3 id='session-label'>Session Length</h3>
             <TimeSet 
               time={sessionTime}
-              setTime={setSessionTime}
+              setTime={changeSessionTime}
               min={min}
               max={max}
               interval={interval}
@@ -72,21 +138,9 @@ function App() {
           startStop={startStop}
         />
         <audio id="beep" src="https://cdn.freecodecamp.org/testable-projects-fcc/audio/BeepSound.wav" />
-
-
-        {/* <div className="row">
-          <h1 id="timer-label">Session</h1>
-          <h2 id="time-left">{sessionTime}</h2>
-          
-          <div className="col bg-primary">
-            <button id="start_stop">start/stop</button>
-            <button id="reset" onClick={() => {setBreakTime(5); setSessionTime(25);}}>reset</button>
-          </div>
-        </div> */}
-
       </div>
     </>
-  )
+  );
 }
 
 export default App
